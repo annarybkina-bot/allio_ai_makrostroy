@@ -1,0 +1,780 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>элементы</title>
+    <style>
+      :root {
+        --page-pad: 24px;
+        --card-radius: 16px;
+        --shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+        --border: rgba(15, 23, 42, 0.12);
+      }
+
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        background: #f6f7fb;
+        color: #111;
+      }
+
+      .page {
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: var(--page-pad);
+      }
+
+      header {
+        padding: 0;
+        margin-bottom: 18px;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(18px, 2.4vw, 26px);
+        font-weight: 750;
+        text-align: left;
+        letter-spacing: 0.1px;
+      }
+
+      .section-title {
+        margin: 26px 0 14px 0;
+        font-size: clamp(18px, 2.4vw, 26px);
+        font-weight: 750;
+        text-align: left;
+        color: rgba(17, 17, 17, 0.95);
+      }
+
+      .gallery {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 20px;
+        align-items: stretch;
+      }
+
+      .card {
+        flex: 1 1 0;
+        min-width: 0;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: var(--card-radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .card-media {
+        width: 100%;
+        background: #fff;
+      }
+
+      .image-frame {
+        width: 420px;
+        height: 420px;
+        padding: 20px;
+        box-sizing: border-box;
+        margin: 0 auto;
+      }
+
+      .image-stage {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      .image-stage img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+      }
+
+      .floor-bbox-overlay {
+        position: absolute;
+        left: 0;
+        top: 0;
+        border: 3px solid rgba(37, 99, 235, 0.95);
+        background: rgba(37, 99, 235, 0.14);
+        pointer-events: none;
+        display: none;
+        box-sizing: border-box;
+        border-radius: 10px;
+      }
+
+      .floor-bbox-label {
+        position: absolute;
+        left: 10px;
+        top: -28px;
+        background: rgba(37, 99, 235, 0.95);
+        color: #fff;
+        font-weight: 700;
+        font-size: 12px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        white-space: nowrap;
+      }
+
+      .card figcaption {
+        padding: 12px 14px;
+        border-top: 1px solid rgba(15, 23, 42, 0.08);
+        font-weight: 600;
+        letter-spacing: 0.2px;
+      }
+
+      .card-answer {
+        padding: 14px;
+        border-top: 1px solid rgba(15, 23, 42, 0.08);
+        background: #fbfcff;
+      }
+
+      .card-answer-title {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: rgba(17, 17, 17, 0.88);
+      }
+
+      .card-answer-body {
+        white-space: pre-wrap;
+        font-size: 14px;
+        line-height: 1.6;
+        color: #111;
+      }
+
+      .card-answer-body:empty::before {
+        content: "Загрузка ответа...";
+        color: rgba(17, 17, 17, 0.55);
+      }
+
+      /* Старая верстка (textarea) больше не используется, но оставим нейтральные стили, чтобы не ломать страницу */
+      .card-text {
+        padding: 0;
+        border-top: none;
+        background: transparent;
+        margin: 0;
+      }
+
+      .card-text label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: rgba(17, 17, 17, 0.88);
+      }
+
+      .card-text textarea {
+        width: 100%;
+        min-height: 170px;
+        max-height: 420px;
+        resize: vertical;
+        border-radius: 12px;
+        border: 1px solid rgba(15, 23, 42, 0.18);
+        background: #fff;
+        padding: 12px 12px;
+        font-family: inherit;
+        font-size: 14px;
+        line-height: 1.55;
+        color: #111;
+        outline: none;
+      }
+
+      .card-text textarea:focus {
+        border-color: rgba(37, 99, 235, 0.55);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.16);
+      }
+
+      @media (max-width: 900px) {
+        .gallery {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <h1>Макрострой</h1>
+      </header>
+
+          <h2 class="section-title" id="apt1">Элементы квартира 1</h2>
+
+          <main class="gallery" aria-label="Квартира и этаж">
+        <figure class="card">
+          <div class="card-media">
+            <div class="image-frame">
+              <div class="image-stage">
+                <img src="./Макрострой/1_Элементы_квартира.png" alt="Квартира" />
+              </div>
+            </div>
+          </div>
+          <figcaption>Квартира 1</figcaption>
+          <div class="card-answer" aria-label="Ответ LLM по квартире">
+            <span class="card-answer-title">Ответ LLM</span>
+            <div id="answer-apartment-1" class="card-answer-body"></div>
+          </div>
+        </figure>
+
+        <figure class="card">
+          <div class="card-media">
+            <div class="image-frame">
+              <div class="image-stage">
+                <img
+                  id="floor-image-1"
+                  src="./Макрострой/1_Элементы_этаж.png"
+                  alt="Этаж"
+                />
+                <div
+                  id="floor-bbox-overlay-1"
+                  class="floor-bbox-overlay"
+                  aria-hidden="true"
+                >
+                  <span id="floor-bbox-label-1" class="floor-bbox-label">Найденная квартира</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <figcaption>Этаж 1</figcaption>
+          <div class="card-answer" aria-label="Ответ LLM по этажу">
+            <span class="card-answer-title">Ответ LLM</span>
+            <div id="answer-floor-1" class="card-answer-body"></div>
+          </div>
+        </figure>
+      </main>
+
+      <h2 class="section-title" id="apt3">Элементы квартира 3</h2>
+
+      <main class="gallery" aria-label="Квартира 3 и этаж 3">
+        <figure class="card">
+          <div class="card-media">
+            <div class="image-frame">
+              <div class="image-stage">
+                <img
+                  src="./Макрострой/3_Элементы_квартира.png"
+                  alt="Квартира 3"
+                />
+              </div>
+            </div>
+          </div>
+          <figcaption>Квартира 3</figcaption>
+          <div class="card-answer" aria-label="Ответ LLM по квартире 3">
+            <span class="card-answer-title">Ответ LLM</span>
+            <div id="answer-apartment-3" class="card-answer-body"></div>
+          </div>
+        </figure>
+
+        <figure class="card">
+          <div class="card-media">
+            <div class="image-frame">
+              <div class="image-stage">
+                <img
+                  id="floor-image-3"
+                  src="./Макрострой/3_Элементы_этаж.png"
+                  alt="Этаж 3"
+                />
+                <div
+                  id="floor-bbox-overlay-3"
+                  class="floor-bbox-overlay"
+                  aria-hidden="true"
+                >
+                  <span id="floor-bbox-label-3" class="floor-bbox-label">Найденная квартира</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <figcaption>Этаж 3</figcaption>
+          <div class="card-answer" aria-label="Ответ LLM по этажу 3">
+            <span class="card-answer-title">Ответ LLM</span>
+            <div id="answer-floor-3" class="card-answer-body"></div>
+          </div>
+        </figure>
+      </main>
+
+      <h2 class="section-title" id="apt4">Сигнатур квартира 4</h2>
+
+      <main class="gallery" aria-label="Квартира 4 и этаж 4">
+        <figure class="card">
+          <div class="card-media">
+            <div class="image-frame">
+              <div class="image-stage">
+                <img src="./Макрострой/4_Сигнатур_квартира.png" alt="Квартира 4" />
+              </div>
+            </div>
+          </div>
+          <figcaption>Квартира 4</figcaption>
+          <div class="card-answer" aria-label="Ответ LLM по квартире 4">
+            <span class="card-answer-title">Ответ LLM</span>
+            <div id="answer-apartment-4" class="card-answer-body"></div>
+          </div>
+        </figure>
+
+        <figure class="card">
+          <div class="card-media">
+            <div class="image-frame">
+              <div class="image-stage">
+                <img
+                  id="floor-image-4"
+                  src="./Макрострой/4_Сигнатур_этаж.png"
+                  alt="Этаж 4"
+                />
+                <div
+                  id="floor-bbox-overlay-4"
+                  class="floor-bbox-overlay"
+                  aria-hidden="true"
+                >
+                  <span id="floor-bbox-label-4" class="floor-bbox-label">Найденная квартира</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <figcaption>Этаж 4</figcaption>
+          <div class="card-answer" aria-label="Ответ LLM по этажу 4">
+            <span class="card-answer-title">Ответ LLM</span>
+            <div id="answer-floor-4" class="card-answer-body"></div>
+          </div>
+        </figure>
+      </main>
+
+      <h2 class="section-title" id="apt5">Сигнатур квартира 5</h2>
+
+      <main class="gallery" aria-label="Квартира 5 и этаж 5">
+        <figure class="card">
+          <div class="card-media">
+            <div class="image-frame">
+              <div class="image-stage">
+                <img src="./Макрострой/5_Сигнатур_квартира.png" alt="Квартира 5" />
+              </div>
+            </div>
+          </div>
+          <figcaption>Квартира 5</figcaption>
+          <div class="card-answer" aria-label="Ответ LLM по квартире 5">
+            <span class="card-answer-title">Ответ LLM</span>
+            <div id="answer-apartment-5" class="card-answer-body"></div>
+          </div>
+        </figure>
+
+        <figure class="card">
+          <div class="card-media">
+            <div class="image-frame">
+              <div class="image-stage">
+                <img
+                  id="floor-image-5"
+                  src="./Макрострой/5_Сигнатур_этаж.png"
+                  alt="Этаж 5"
+                />
+                <div
+                  id="floor-bbox-overlay-5"
+                  class="floor-bbox-overlay"
+                  aria-hidden="true"
+                >
+                  <span id="floor-bbox-label-5" class="floor-bbox-label">Найденная квартира</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <figcaption>Этаж 5</figcaption>
+          <div class="card-answer" aria-label="Ответ LLM по этажу 5">
+            <span class="card-answer-title">Ответ LLM</span>
+            <div id="answer-floor-5" class="card-answer-body"></div>
+          </div>
+        </figure>
+      </main>
+
+      <h2 class="section-title" id="apt6">Сигнатур квартира 6</h2>
+
+      <main class="gallery" aria-label="Квартира 6 и этаж 6">
+        <figure class="card">
+          <div class="card-media">
+            <div class="image-frame">
+              <div class="image-stage">
+                <img src="./Макрострой/6_Сигнатур_квартира.png" alt="Квартира 6" />
+              </div>
+            </div>
+          </div>
+          <figcaption>Квартира 6</figcaption>
+          <div class="card-answer" aria-label="Ответ LLM по квартире 6">
+            <span class="card-answer-title">Ответ LLM</span>
+            <div id="answer-apartment-6" class="card-answer-body"></div>
+          </div>
+        </figure>
+
+        <figure class="card">
+          <div class="card-media">
+            <div class="image-frame">
+              <div class="image-stage">
+                <img
+                  id="floor-image-6"
+                  src="./Макрострой/6_Сигнатур_план.png"
+                  alt="План 6"
+                />
+                <div
+                  id="floor-bbox-overlay-6"
+                  class="floor-bbox-overlay"
+                  aria-hidden="true"
+                >
+                  <span id="floor-bbox-label-6" class="floor-bbox-label">Найденная квартира</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <figcaption>Этаж 6</figcaption>
+          <div class="card-answer" aria-label="Ответ LLM по этажу 6">
+            <span class="card-answer-title">Ответ LLM</span>
+            <div id="answer-floor-6" class="card-answer-body"></div>
+          </div>
+        </figure>
+      </main>
+
+      <h2 class="section-title" id="apt7">МС18 квартира 7</h2>
+
+      <main class="gallery" aria-label="Квартира 7 и этаж 7">
+        <figure class="card">
+          <div class="card-media">
+            <div class="image-frame">
+              <div class="image-stage">
+                <img src="./Макрострой/7_МС18_квартира.png" alt="Квартира 7" />
+              </div>
+            </div>
+          </div>
+          <figcaption>Квартира 7</figcaption>
+          <div class="card-answer" aria-label="Ответ LLM по квартире 7">
+            <span class="card-answer-title">Ответ LLM</span>
+            <div id="answer-apartment-7" class="card-answer-body"></div>
+          </div>
+        </figure>
+
+        <figure class="card">
+          <div class="card-media">
+            <div class="image-frame">
+              <div class="image-stage">
+                <img
+                  id="floor-image-7"
+                  src="./Макрострой/7_МС18_этаж.png"
+                  alt="Этаж 7"
+                />
+                <div
+                  id="floor-bbox-overlay-7"
+                  class="floor-bbox-overlay"
+                  aria-hidden="true"
+                >
+                  <span id="floor-bbox-label-7" class="floor-bbox-label">Найденная квартира</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <figcaption>Этаж 7</figcaption>
+          <div class="card-answer" aria-label="Ответ LLM по этажу 7">
+            <span class="card-answer-title">Ответ LLM</span>
+            <div id="answer-floor-7" class="card-answer-body"></div>
+          </div>
+        </figure>
+      </main>
+
+      <h2 class="section-title" id="apt8">МС18 квартира 8</h2>
+
+      <main class="gallery" aria-label="Квартира 8 и этаж 8">
+        <figure class="card">
+          <div class="card-media">
+            <div class="image-frame">
+              <div class="image-stage">
+                <img src="./Макрострой/8_МС18_квартира.png" alt="Квартира 8" />
+              </div>
+            </div>
+          </div>
+          <figcaption>Квартира 8</figcaption>
+          <div class="card-answer" aria-label="Ответ LLM по квартире 8">
+            <span class="card-answer-title">Ответ LLM</span>
+            <div id="answer-apartment-8" class="card-answer-body"></div>
+          </div>
+        </figure>
+
+        <figure class="card">
+          <div class="card-media">
+            <div class="image-frame">
+              <div class="image-stage">
+                <img
+                  id="floor-image-8"
+                  src="./Макрострой/8_МС18_этаж.png"
+                  alt="Этаж 8"
+                />
+                <div
+                  id="floor-bbox-overlay-8"
+                  class="floor-bbox-overlay"
+                  aria-hidden="true"
+                >
+                  <span id="floor-bbox-label-8" class="floor-bbox-label">Найденная квартира</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <figcaption>Этаж 8</figcaption>
+          <div class="card-answer" aria-label="Ответ LLM по этажу 8">
+            <span class="card-answer-title">Ответ LLM</span>
+            <div id="answer-floor-8" class="card-answer-body"></div>
+          </div>
+        </figure>
+      </main>
+
+      <h2 class="section-title" id="apt9">Сальвадор квартира 9</h2>
+
+      <main class="gallery" aria-label="Квартира 9 и этаж 9">
+        <figure class="card">
+          <div class="card-media">
+            <div class="image-frame">
+              <div class="image-stage">
+                <img src="./Макрострой/9_Сальвадор_квартира.png" alt="Квартира 9" />
+              </div>
+            </div>
+          </div>
+          <figcaption>Квартира 9</figcaption>
+          <div class="card-answer" aria-label="Ответ LLM по квартире 9">
+            <span class="card-answer-title">Ответ LLM</span>
+            <div id="answer-apartment-9" class="card-answer-body"></div>
+          </div>
+        </figure>
+
+        <figure class="card">
+          <div class="card-media">
+            <div class="image-frame">
+              <div class="image-stage">
+                <img
+                  id="floor-image-9"
+                  src="./Макрострой/9_Сальвадор_этаж.png"
+                  alt="Этаж 9"
+                />
+                <div
+                  id="floor-bbox-overlay-9"
+                  class="floor-bbox-overlay"
+                  aria-hidden="true"
+                >
+                  <span id="floor-bbox-label-9" class="floor-bbox-label">Найденная квартира</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <figcaption>Этаж 9</figcaption>
+          <div class="card-answer" aria-label="Ответ LLM по этажу 9">
+            <span class="card-answer-title">Ответ LLM</span>
+            <div id="answer-floor-9" class="card-answer-body"></div>
+          </div>
+        </figure>
+      </main>
+
+      <h2 class="section-title" id="apt10">Сальвадор квартира 10</h2>
+
+      <main class="gallery" aria-label="Квартира 10 и этаж 10">
+        <figure class="card">
+          <div class="card-media">
+            <div class="image-frame">
+              <div class="image-stage">
+                <img src="./Макрострой/10_Сальвадор_квартира.png" alt="Квартира 10" />
+              </div>
+            </div>
+          </div>
+          <figcaption>Квартира 10</figcaption>
+          <div class="card-answer" aria-label="Ответ LLM по квартире 10">
+            <span class="card-answer-title">Ответ LLM</span>
+            <div id="answer-apartment-10" class="card-answer-body"></div>
+          </div>
+        </figure>
+
+        <figure class="card">
+          <div class="card-media">
+            <div class="image-frame">
+              <div class="image-stage">
+                <img
+                  id="floor-image-10"
+                  src="./Макрострой/10_Сальвадор_этаж.png"
+                  alt="Этаж 10"
+                />
+                <div
+                  id="floor-bbox-overlay-10"
+                  class="floor-bbox-overlay"
+                  aria-hidden="true"
+                >
+                  <span id="floor-bbox-label-10" class="floor-bbox-label">Найденная квартира</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <figcaption>Этаж 10</figcaption>
+          <div class="card-answer" aria-label="Ответ LLM по этажу 10">
+            <span class="card-answer-title">Ответ LLM</span>
+            <div id="answer-floor-10" class="card-answer-body"></div>
+          </div>
+        </figure>
+      </main>
+
+      <h2 class="section-title" id="apt11">Сальвадор квартира 11</h2>
+
+      <main class="gallery" aria-label="Квартира 11 и этаж 11">
+        <figure class="card">
+          <div class="card-media">
+            <div class="image-frame">
+              <div class="image-stage">
+                <img src="./Макрострой/11_Сальвадор_квартира.png" alt="Квартира 11" />
+              </div>
+            </div>
+          </div>
+          <figcaption>Квартира 11</figcaption>
+          <div class="card-answer" aria-label="Ответ LLM по квартире 11">
+            <span class="card-answer-title">Ответ LLM</span>
+            <div id="answer-apartment-11" class="card-answer-body"></div>
+          </div>
+        </figure>
+
+        <figure class="card">
+          <div class="card-media">
+            <div class="image-frame">
+              <div class="image-stage">
+                <img
+                  id="floor-image-11"
+                  src="./Макрострой/11_Сальвадор_этаж.png"
+                  alt="Этаж 11"
+                />
+                <div
+                  id="floor-bbox-overlay-11"
+                  class="floor-bbox-overlay"
+                  aria-hidden="true"
+                >
+                  <span id="floor-bbox-label-11" class="floor-bbox-label">Найденная квартира</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <figcaption>Этаж 11</figcaption>
+          <div class="card-answer" aria-label="Ответ LLM по этажу 11">
+            <span class="card-answer-title">Ответ LLM</span>
+            <div id="answer-floor-11" class="card-answer-body"></div>
+          </div>
+        </figure>
+      </main>
+
+      <!-- apt2/apt3 removed from end to keep correct page order -->
+    </div>
+
+    <script>
+      (function () {
+        function stripMarkdownBold(s) {
+          return String(s ?? "").replace(/\*\*/g, "").trim();
+        }
+
+        function formatNumberedPoints(s) {
+          // Приводим "…: 1. ... 2. ... 3. ..." к виду с переносами строк.
+          let t = String(s ?? "");
+          t = t.replace(/\r\n/g, "\n").replace(/\s+\n/g, "\n");
+
+          // После двоеточия перед первым пунктом.
+          t = t.replace(/:\s*(\d+\.)/g, ":\n\n$1");
+
+          // Перед каждым следующим пунктом.
+          // Делаем двойной перенос строки, чтобы пункты визуально разделялись.
+          t = t.replace(/\s+(?=\d+\.)/g, "\n\n");
+
+          return t.trim();
+        }
+
+        async function loadAnswers() {
+          try {
+            const res = await fetch("./elements_llm_answers.json", { cache: "no-store" });
+            if (!res.ok) throw new Error("HTTP " + res.status);
+            const data = await res.json();
+
+            const indices = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
+            function applySection(sectionKey, apartmentEl, floorEl, floorImgEl, bboxOverlayEl, bboxLabelEl) {
+              const section = data?.[sectionKey] ?? {};
+              apartmentEl.textContent = stripMarkdownBold(section?.apartment?.content ?? "");
+              floorEl.textContent = formatNumberedPoints(stripMarkdownBold(section?.floor?.content ?? ""));
+
+              const bbox = section?.floor?.bbox;
+              const confidence = section?.floor?.confidence;
+
+              function applyBBoxWhenImgReady() {
+                const naturalW = floorImgEl.naturalWidth;
+                const naturalH = floorImgEl.naturalHeight;
+                const dispW = floorImgEl.clientWidth;
+                const dispH = floorImgEl.clientHeight;
+
+                if (!bbox || !naturalW || !naturalH || !dispW || !dispH) {
+                  bboxOverlayEl.style.display = "none";
+                  return;
+                }
+
+                const xMin = Number(bbox.x_min ?? bbox.xMin);
+                const yMin = Number(bbox.y_min ?? bbox.yMin);
+                const xMax = Number(bbox.x_max ?? bbox.xMax);
+                const yMax = Number(bbox.y_max ?? bbox.yMax);
+
+                if (![xMin, yMin, xMax, yMax].every((v) => Number.isFinite(v))) {
+                  bboxOverlayEl.style.display = "none";
+                  return;
+                }
+
+                // object-fit: contain (letterboxing внутри img)
+                const scale = Math.min(dispW / naturalW, dispH / naturalH);
+                const contentW = naturalW * scale;
+                const contentH = naturalH * scale;
+                const offsetX = (dispW - contentW) / 2;
+                const offsetY = (dispH - contentH) / 2;
+
+                const left = offsetX + xMin * contentW;
+                const top = offsetY + yMin * contentH;
+                const width = (xMax - xMin) * contentW;
+                const height = (yMax - yMin) * contentH;
+
+                if (width <= 0 || height <= 0) {
+                  bboxOverlayEl.style.display = "none";
+                  return;
+                }
+
+                bboxOverlayEl.style.left = `${left}px`;
+                bboxOverlayEl.style.top = `${top}px`;
+                bboxOverlayEl.style.width = `${width}px`;
+                bboxOverlayEl.style.height = `${height}px`;
+                bboxOverlayEl.style.display = "block";
+
+                if (bboxLabelEl) {
+                  const c = Number(confidence);
+                  bboxLabelEl.textContent = Number.isFinite(c)
+                    ? `Найденная квартира (${Math.round(c * 100)}%)`
+                    : "Найденная квартира";
+                }
+              }
+
+              if (floorImgEl.complete) applyBBoxWhenImgReady();
+              else floorImgEl.addEventListener("load", applyBBoxWhenImgReady, { once: true });
+            }
+
+            indices.forEach((idx) => {
+              const apartmentEl = document.getElementById(`answer-apartment-${idx}`);
+              const floorEl = document.getElementById(`answer-floor-${idx}`);
+              const floorImgEl = document.getElementById(`floor-image-${idx}`);
+              const bboxOverlayEl = document.getElementById(`floor-bbox-overlay-${idx}`);
+              const bboxLabelEl = document.getElementById(`floor-bbox-label-${idx}`);
+
+              if (!apartmentEl || !floorEl || !floorImgEl || !bboxOverlayEl) return;
+              applySection(String(idx), apartmentEl, floorEl, floorImgEl, bboxOverlayEl, bboxLabelEl);
+            });
+          } catch (e) {
+            const err = "Не удалось загрузить answers (проверьте файл elements_llm_answers.json).";
+            const indices = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+            indices.forEach((idx) => {
+              const apartmentEl = document.getElementById(`answer-apartment-${idx}`);
+              const floorEl = document.getElementById(`answer-floor-${idx}`);
+              if (apartmentEl) apartmentEl.textContent = err;
+              if (floorEl) floorEl.textContent = err;
+            });
+            console.error(e);
+          }
+        }
+
+        loadAnswers();
+      })();
+    </script>
+  </body>
+</html>
+
